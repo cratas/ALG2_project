@@ -1,4 +1,5 @@
-﻿#include "Encoder.h"
+#include "Encoder.cpp"
+
 using namespace std;
 
 void printCorrectFormat()
@@ -18,12 +19,28 @@ int main(int argc, char** argv)
         exit(0);
     }
     
-    Encoder* e = new Encoder("input.txt");
+    
+    if (argv[1][0] == 'c')
+    {
+        Encoder* e = new Encoder(argv[2], argv[3]);
 
-    cout << e->getInputText() << endl;
-    e->setFrequencies();
-    //e->printFrequencies();
-    e->sortFrequencies();
+        cout << e->getInputText() << endl;
+        e->setFrequencies();
+        e->printFrequencies();
+        e->setSortedFrequencies();
+        e->buildHuffmanTree();
+    }
+    else if(argv[1][0] == 'd')
+    {
+        cout << "nene" << endl;
+    }
+    else
+    {
+        printCorrectFormat();
+        exit(0);
+    }
+    
+    
     return 0;
 }
 
