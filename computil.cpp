@@ -1,4 +1,5 @@
-#include "Encoder.cpp"
+﻿#include "Encoder.cpp"
+#include "Decoder.cpp"
 
 using namespace std;
 
@@ -24,15 +25,15 @@ int main(int argc, char** argv)
     {
         Encoder* e = new Encoder(argv[2], argv[3]);
 
-        cout << e->getInputText() << endl;
-        e->setFrequencies();
-        e->printFrequencies();
-        e->setSortedFrequencies();
-        e->buildHuffmanTree();
+        e->encode();
     }
     else if(argv[1][0] == 'd')
     {
-        cout << "nene" << endl;
+        Encoder* e = new Encoder(argv[2], argv[3]);
+        e->encode();
+        Decoder* d = new Decoder(argv[2], argv[3], e->getFrequencies());
+        d->createHuffmanCode();
+        d->decode(e->getEncodedString());
     }
     else
     {

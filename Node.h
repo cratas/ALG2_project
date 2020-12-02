@@ -1,8 +1,9 @@
+#pragma once
 struct Node
 {
-	char ch;
-	int freq;
-	Node* left, * right;
+    char ch;
+    int freq;
+    Node* left, * right;
 };
 
 struct comp

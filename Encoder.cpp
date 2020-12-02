@@ -1,11 +1,9 @@
 #include "Encoder.h"
 
-
 Encoder::Encoder(string inputFile, string outputFile)
 {
 	this->inputFile = inputFile;
     this->outputFile = outputFile;
-    loadText();
 }
 
 void Encoder::loadText()
@@ -16,29 +14,11 @@ void Encoder::loadText()
     inputText = sstream.str();
 }
 
-string Encoder::getInputText()
-{
-    return inputText;
-}
-
 void Encoder::setFrequencies()
 {
     for (char c : inputText)
     {
         frequencies[c]++;
-    }
-    setSortedFrequencies();
-}
-
-void Encoder::printFrequencies()
-{
-    vector<pair<char, int>>::iterator iterator;
-
-    cout << endl << "CHARACTER    COUNT" << endl;
-
-    for (iterator = sortedFrequencies.begin(); iterator != sortedFrequencies.end(); iterator++)
-    {
-        cout << "   '" << iterator->first << "'         " << iterator->second << endl;
     }
 }
 
@@ -46,14 +26,6 @@ bool cmp(pair<char, int>& a,
     pair<char, int>& b)
 {
     return a.second < b.second;
-}
-
-void Encoder::setSortedFrequencies()
-{
-    for (auto& it : frequencies) {
-        sortedFrequencies.push_back(it);
-    }
-    sort(sortedFrequencies.begin(), sortedFrequencies.end(), cmp);
 }
 
 Node* Encoder::getNode(char ch, int freq, Node* left, Node* right)
@@ -71,10 +43,14 @@ Node* Encoder::getNode(char ch, int freq, Node* left, Node* right)
 void Encoder::encode(Node* root, string str ,unordered_map<char, string>& huffmanCode)
 {
     if (root == nullptr)
+    {
         return;
+    }
+      
 
     // found a leaf node
-    if (!root->left && !root->right) {
+    if (!root->left && !root->right) 
+    {
         huffmanCode[root->ch] = str;
     }
 
@@ -82,7 +58,7 @@ void Encoder::encode(Node* root, string str ,unordered_map<char, string>& huffma
     encode(root->right, str + "1", huffmanCode);
 }
 
-void Encoder::buildHuffmanTree() //https://www.techiedelight.com/huffman-coding/
+void Encoder::createHuffmanCode() //https://www.techiedelight.com/huffman-coding/
 {
 
     // Create a leaf node for each character and add it
@@ -132,8 +108,24 @@ void Encoder::buildHuffmanTree() //https://www.techiedelight.com/huffman-coding/
     }
 
     cout << "\nEncoded string is :\n" << str << '\n';
+    encodedString = str;
 
 }
 
+map<char, int> Encoder::getFrequencies()
+{
+    return frequencies;
+}
 
+string Encoder::getEncodedString()
+{
+    return encodedString;
+}
 
+void Encoder::encode()
+{
+    loadText();
+    setFrequencies();
+    createHuffmanCode();
+
+}

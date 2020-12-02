@@ -19,20 +19,19 @@ private:
 	string inputFile;
 	string outputFile;
 	string inputText;
+	string encodedString;
 	map<char, int> frequencies;
-	vector<pair<char, int>> sortedFrequencies;
 	priority_queue<Node*, vector<Node*>, comp> priorityQueue;
-
 	void loadText();
 	void encode(Node* root, string str, unordered_map<char, string>& huffmanCode);
-
+	void setFrequencies();
+	Node* getNode(char ch, int freq, Node* left, Node* right);
+	void createHuffmanCode();
 public:
 	Encoder(string filename, string outputFile);
-	string getInputText();
-	void setFrequencies();
-	void printFrequencies();
-	void setSortedFrequencies();
-	Node* getNode(char ch, int freq, Node* left, Node* right);
-	void buildHuffmanTree();
+	void encode();
+	map<char, int> getFrequencies();
+	string getEncodedString();
+	
 };
 
